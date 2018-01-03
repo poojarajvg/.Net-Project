@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "OrderDetails";
+}
+
+<h2>OrderDetails</h2>
+<div id="OrderDetails">
+</div>
+
+<input type="submit" id="btnShowOrder" value="Get List" />
+<script type="text/javascript">
+
+     $(document).ready(function () {
+        $(function () {
+        $('#btnShowOrder').click(function (event) {
+            event.preventDefault();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("OrderList")',
+                    dataType: 'json',
+                    data: {},
+                    success: function(data)
+                    {
+                        $.each(data, function(data, item)
+                        {
+                            var order = "" +
+                                "Order Id: " + item.OrderId + "<br/>" +
+                                "Account Number: " + item.CustomerName + "<br/>" +
+                                "Customer Name: " + item.AccountNumber + "<br/>" +
+                                "Service Count: " + item.ServiceCollection.length +
+                                "<br/><br/>";
+                            $('#OrderDetails').append(order);
+                        });
+                    },
+                    error: function(ex)
+                    {
+                    }
+                });
+            });
+        });
+        return false;
+    });
+</script>
